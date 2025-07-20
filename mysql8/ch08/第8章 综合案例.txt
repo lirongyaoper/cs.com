@@ -1,0 +1,53 @@
+创建数据表books，并定义各个字段。
+CREATE TABLE books
+(
+id      	INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+name   	VARCHAR(40) NOT NULL,
+authors  VARCHAR(200) NOT NULL,
+price    	INT(11) NOT NULL,
+pubdate 	YEAR NOT NULL,
+note    	VARCHAR(255) NULL,
+num    	INT NOT NULL DEFAULT 0
+);
+ 
+SELECT * FROM books;
+
+ INSERT INTO books
+      (id, name, authors, price, pubdate,note,num)
+      VALUES(1, 'Tale of AAA', 'Dickes', 23, '1995', 'novel',11);
+
+（2）不指定字段名称插入记录，SQL语句如下。
+ INSERT INTO books
+      VALUES (2,'EmmaT','Jane lura',35,'1993', 'joke',22);
+
+使用SELECT语句查看当前表中的数据：
+ SELECT * FROM books;
+（3）同时插入多条记录。
+使用INSERT语句将剩下的多条记录插入表中，SQL语句如下：
+ INSERT INTO books
+     VALUES(3, 'Story of Jane', 'Jane Tim', 40, '2001', 'novel', 0),
+     (4, 'Lovey Day', 'George Byron', 20, '2005', 'novel', 30),
+     (5, 'Old Land', 'Honore Blade', 30, '2010', 'law',0),
+     (6,'The Battle','Upton Sara',33,'1999', 'medicine',40),
+     (7,'Rose Hood','Richard Kale',28,'2008', 'cartoon',28);
+ SELECT * FROM books;
+UPDATE books SET price = price + 5 WHERE note = ‘novel’;
+ SELECT id, name, price, note FROM books WHERE note = 'novel';
+ UPDATE books SET price = price + 5 WHERE note = 'novel';
+ SELECT id, name, price, note FROM books WHERE note = 'novel';
+  将名称为EmmaT的书的价格改为40，并将说明改为drama。
+修改语句为：
+UPDATE books SET price=40,note= 'drama 'WHERE name= 'EmmaT ';
+执行修改前，使用SELECT语句查看当前记录：
+ SELECT name, price, note FROM books WHERE name='EmmaT';
+下面执行修改操作：
+UPDATE books SET price=40,note='drama' WHERE name='EmmaT';
+
+SELECT name, price, note FROM books WHERE name='EmmaT';
+
+DELETE FROM books WHERE num=0;
+
+SELECT * FROM books WHERE num=0;
+DELETE FROM books WHERE num=0;
+SELECT * FROM books WHERE num=0;
+

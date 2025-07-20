@@ -1,0 +1,47 @@
+C:\>mysql –h localhost -u root -p
+CREATE DATABASE company;
+USE company;
+CREATE TABLE offices 
+(
+officeCode  INT(10) NOT NULL UNIQUE,
+city        VARCHAR(50) NOT NULL,
+address     VARCHAR(50) NOT NULL,
+country     VARCHAR(50) NOT NULL,
+postalCode  VARCHAR(15) NOT NULL,
+PRIMARY KEY  (officeCode)
+);
+ show tables;
+ 创建表employees。
+创建表employees的语句如下：
+CREATE TABLE employees 
+(
+employeeNumber  INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+lastName         VARCHAR(50) NOT NULL,
+firstName        VARCHAR(50) NOT NULL,
+mobile           VARCHAR(25) NOT NULL,
+officeCode       INT(10) NOT NULL,
+jobTitle         VARCHAR(50) NOT NULL,
+birth            DATETIME,
+note            VARCHAR(255),
+sex             VARCHAR(5),
+CONSTRAINT office_fk FOREIGN KEY(officeCode)  REFERENCES offices(officeCode)
+);
+show tables;
+DESC offices;
+DESC employees;
+ALTER TABLE employees MODIFY mobile VARCHAR(25) AFTER officeCode;
+DESC employees;
+ALTER TABLE employees CHANGE birth employee_birth DATETIME;
+DESC employees;
+ALTER TABLE employees MODIFY sex CHAR(1) NOT NULL;
+DESC employees;
+ALTER TABLE employees DROP note;
+desc employees;
+desc employees;
+ALTER TABLE employees DROP FOREIGN KEY office_fk;
+DROP TABLE offices;
+show tables;
+ALTER TABLE employees ENGINE=MyISAM;
+show CREATE TABLE employees\G
+ALTER TABLE employees RENAME employees_info;
+show tables;

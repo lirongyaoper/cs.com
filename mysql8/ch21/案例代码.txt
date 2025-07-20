@@ -1,0 +1,13 @@
+在主机2上安装MySQL Proxy并创建服务，命令如下：
+sc create "Proxy" DisplayName= "MySQL Proxy" start= "auto" binPath= "C:\Program Files\MySQL\mysql-proxy-0.8.5\bin\mysql-proxy-svc.exe --proxy-backend-addresses=192.168.1.102:3306"
+在主机2上配置代理参数，设置与主机3连接，命令如下：
+mysql-proxy --proxy-backend-addresses=192.168.1.103:3306
+在主机2上配置代理参数，设置与主机4连接，实现只读操作，命令如下：
+mysql-proxy --proxy-read-only-backend-addresses=192.168.1.104:3306
+分别在主机3和主机4上创建管理账号zhangsan，密码为zhang123456，并有读写操作数据库test的权限，命令如下：
+GRANT SELECT,INSERT ON test TO ' zhangsan'@'localhost' 
+    IDENTIFIED BY ' zhang123456'
+用主机1连接主机2，命令如下：
+mysql  -h 192.168.1.102 –u zhangsan –p 123456 –P 4040
+连接成功后，创建数据表：
+Create  table ceshi(id int,name char(6))；

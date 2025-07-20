@@ -1,0 +1,86 @@
+本系统所有的表都放在webnews数据库下。创建和选择webnews数据库的SQL代码如下：
+CREATE DATABASE webnews;
+
+USE webnews;
+CREATE TABLE user(
+userID INT PRIMARY KEY UNIQUE NOT NULL,
+userName VARCHAR(20) NOT NULL,
+userPassword VARCHAR(20) NOT NULL,
+sex varchar(10) NOT NULL,
+userEmail VARCHAR(20) NOT NULL
+);
+CREATE TABLE admin(
+adminID INT PRIMARY KEY UNIQUE NOT NULL,
+adminName VARCHAR(20) NOT NULL,
+adminPassword VARCHAR(20) NOT NULL
+);
+CREATE TABLE roles(
+roleID INT PRIMARY KEY UNIQUE NOT NULL,
+roleName VARCHAR(20) NOT NULL
+);
+CREATE TABLE news(
+newsID INT PRIMARY KEY UNIQUE NOT NULL,
+newsTitle VARCHAR(50) NOT NULL,
+newsContent TEXT NOT NULL,
+newsDate TIMESTAMP,
+newsDesc VARCHAR(50) NOT NULL,
+newsImagePath VARCHAR(50),
+newsRate INT,
+newsIsCheck BIT,
+newsIsTop BIT 
+);
+CREATE TABLE categroy (
+categoryID INT PRIMARY KEY UNIQUE NOT NULL,
+categoryName VARCHAR(50) NOT NULL,
+categoryDesc VARCHAR(50) NOT NULL
+);
+CREATE TABLE comment (
+commentID INT PRIMARY KEY UNIQUE NOT NULL,
+commentTitle VARCHAR(50) NOT NULL,
+commentContent TEXT NOT NULL,
+commentDate DATETIME
+);
+CREATE TABLE admin_Roles (
+aRID INT PRIMARY KEY UNIQUE NOT NULL,
+adminID INT NOT NULL,
+roleID INT NOT NULL
+);
+CREATE TABLE news_Comment (
+nCommentID INT PRIMARY KEY UNIQUE NOT NULL,
+newsID INT NOT NULL,
+commentID INT NOT NULL
+);
+CREATE TABLE news_Comment (
+uCID  INT PRIMARY KEY UNIQUE NOT NULL,
+userID  INT NOT NULL,
+commentID  INT NOT NULL
+);
+CREATE INDEX index_new_title ON news(newsTitle);
+CREATE INDEX index_new_date  ON news(newsDate);
+ALTER TABLE news  ADD INDEX index_new_rate (newsRate);
+CREATE INDEX index_categroy_name ON categroy (categroyName);
+CREATE INDEX index_ comment _title  ON comment (commentTitle);
+CREATE INDEX index_ comment _date  ON comment (commentDate);
+CREATE VIEW news_view
+AS SELECT c.commentID,n.newsID,n.newsRate,n.newsTitle,n.newsContent,n.newsDate
+FROM news_Comment c,news n
+WHERE news_Comment.newsID=news.newsID;
+
+
+DELIMITER &&
+CREATE TRIGGER update_newsID AFTER UPDATE
+ON news FOR EACH ROW
+BEGIN
+   UPDATE news_Comment SET newsID=NEW. newsID
+END
+&&
+DELIMITER ;
+
+DELIMITER &&
+CREATE TRIGGER delete_user AFTER DELETE
+ON user FOR EACH ROW
+BEGIN
+   DELETE FROM users_Comment WHERE userID=OLD.userID
+END
+&&
+DELIMITER ;

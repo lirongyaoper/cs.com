@@ -1,0 +1,53 @@
+登录MySQL数据库。
+打开Windows命令行，输入登录用户名和密码：
+C:\>mysql –h localhost -u root -p
+Enter password: **
+  创建数据库index_test。
+创建数据库index_test的语句如下：
+ CREATE database index_test;
+Query OK, 1 row affected (0.00 sec)
+结果显示创建成功，在index_test数据库中创建表，必须先选择该数据库，输入语句如下：
+USE index_test;
+Database changed
+结果显示选择数据库成功。
+创建表test_table1。
+CREATE TABLE test_table1
+(
+id          INT NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+name       CHAR(100) NOT NULL,
+address     CHAR(100) NOT NULL,
+description  CHAR(100) NOT NULL,
+UNIQUE INDEX UniqIdx(id),
+INDEX MultiColIdx(name(20), address(30)),
+INDEX ComIdx( description(30) )
+);
+使用SHOW语句查看索引信息：
+ SHOW CREATE table test_table1 \G
+
+  创建表test_table2，存储引擎为MyISAM。
+CREATE TABLE test_table2
+(
+id         INT NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+firstname   CHAR(100) NOT NULL,
+middlename CHAR(100) NOT NULL,
+lastname   CHAR(100) NOT NULL,
+birth      DATE NOT NULL,
+title       CHAR(100) NULL
+) ENGINE=MyISAM;
+ 
+ ALTER TABLE test_table2 ADD INDEX ComDateIdx(birth);
+
+ ALTER TABLE test_table2 ADD UNIQUE INDEX UniqIdx2 (id DESC) ;
+
+
+ CREATE INDEX MultiColIdx2 ON test_table2(firstname, middlename, lastname);
+
+  使用CREATE INDEX在title字段上建立名称为FTIdx的全文索引。
+ CREATE FULLTEXT INDEX FTIdx ON test_table2(title);
+
+  使用ALTER TABLE语句删除表test_table1中名称为UniqIdx的唯一索引。
+  ALTER TABLE test_table1 DROP INDEX UniqIdx;
+
+  使用DROP INDEX语句删除表test_table2中名称为MultiColIdx2的组合索引。
+ DROP INDEX MultiColIdx2 ON test_table2;
+

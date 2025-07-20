@@ -1,0 +1,18 @@
+下面是一个创建和使用MERGE表的例子。
+ 	创建三个表：table_myisam_1、table_myisam_2、table_merge_12（MERGE表）。
+mysql> create table table_myisam_1(
+    -> id int primary key,.
+    -> data datetime
+    -> )engine=myisam default charset=gbk;
+mysql> create table table_myisam_2(
+mysql> create table table_merge_12(
+    -> id int primary key,
+    -> data datetime
+    -> )engine=merge union=(table_myisam_1,table_myisam_2) insert_method=first;
+mysql> insert into table_myisam_1 values(1,'2018-1-2'),(2,'2018-1-3');
+mysql> insert into table_myisam_2 values(1,'2018-1-2'),(2,'2018-1-3');
+mysql> select *from table_merge_12;
+mysql> insert into table_merge_12 values(3,'2020-2-3');
+mysql> select *from table_myisam_1;
+
+mysql> select *from table_myisam_2;

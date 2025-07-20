@@ -1,0 +1,265 @@
+【例5.1】创建表tmp1，其中字段x、y、z、m、n数据类型依次为TINYINT、SMALLINT、MEDIUMINT、INT、BIGINT，SQL语句如下：
+CREATE TABLE tmp1 ( x TINYINT,  y SMALLINT,  z MEDIUMINT,  m INT,  n BIGINT );
+
+DESC tmp1;
+【例5.2】创建表tmp2，其中字段x、y、z数据类型依次为FLOAT(5,1)、DOUBLE(5,1)和DECIMAL(5,1)，向表中插入数据5.12、5.15和5.123，SQL语句如下：
+CREATE TABLE tmp2 ( x FLOAT(5,1),  y DOUBLE(5,1),  z DECIMAL(5,1) );
+向表中插入数据：
+INSERT INTO tmp2 VALUES(5.12, 5.15, 5.123);
+SHOW WARNINGS;
+
+【例5.3】创建数据表tmp3，定义数据类型为YEAR的字段y，向表中插入值2010，’2010’，’2166’，SQL语句如下：
+首先创建表tmp3：
+CREATE TABLE tmp3(  y YEAR );
+向表中插入数据：
+INSERT INTO tmp3 values(2010),('2010');
+再次向表中插入数据：
+INSERT INTO tmp3 values ('2166');
+SHOW WARNINGS;
+SELECT * FROM tmp3;
+【例5.4】向tmp3表中y字段插入2位字符串表示的YEAR值，分别为’0’、’00’、’77’和’10’，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp3;
+向表中插入数据：
+INSERT INTO tmp3 values('0'),('00'),('77'),('10');
+查看结果：
+SELECT * FROM tmp3;
+【例5.5】向tmp3表中y字段插入2位数字表示表示的YEAR值，分别为0、78和11，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp3;
+向表中插入数据：
+INSERT INTO tmp3 values(0),(78),(11);
+查看结果：
+SELECT * FROM tmp3;
+【例5.6】 创建数据表tmp4，定义数据类型为TIME的字段t，向表中插入值’10:05:05’，’23:23’，’2 10:10’，’3 02’，’10’，SQL语句如下：
+首先创建表tmp4，
+CREATE TABLE tmp4( t TIME );
+向表中插入数据：
+INSERT INTO tmp4 values('10:05:05 '), ('23:23'), ('2 10:10'), ('3 02'),('10');
+查看结果：
+SELECT * FROM tmp4;
+【例5.7】向表tmp4中插入值’101112’，111213,’0’，107010，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp4;
+向表中插入数据：
+INSERT INTO tmp4 values('101112'),(111213),( '0');
+再向表中插入数据：
+INSERT INTO tmp4 values ( 107010);
+show warnings; 
+【例5.8】向tmp4表中插入系统当前时间，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp4;
+向表中插入数据：
+INSERT INTO tmp4 values (CURRENT_TIME) ,(NOW());
+查看结果：
+SELECT * FROM tmp4;
+【例5.9】创建数据表tmp5，定义数据类型为DATE的字段d，向表中插入“YYYY-MM-DD”和“YYYYMMDD”字符串格式日期，SQL语句如下：
+首先创建表tmp5：
+CREATE TABLE tmp5(d DATE);
+Query OK, 0 rows affected (0.02 sec)
+向表中插入“YYYY-MM-DD”和“YYYYMMDD”格式日期：
+INSERT INTO tmp5 values('1998-08-08'),('19980808'),('20101010');
+查看插入结果：
+SELECT * FROM tmp5;
+【例5.10】向tmp5表中插入“YY-MM-DD”和“YYMMDD”字符串格式日期，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp5;
+向表中插入“YY-MM-DD”和“YYMMDD”格式日期：
+INSERT INTO tmp5 values ('99-09-09'),( '990909'), ('000101') ,('111111');
+查看插入结果：
+SELECT * FROM tmp5;
+【例5.11】向tmp5表中插入YY-MM-DD和YYMMDD数字格式日期，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp5;
+向表中插入YY-MM-DD和YYMMDD数字格式日期：
+INSERT INTO tmp5 values (99-09-09),(990909), ( 000101) ,( 111111);
+查看插入结果：
+SELECT * FROM tmp5;
+【例5.12】向tmp5表中插入系统当前日期，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp5;
+向表中插入系统当前日期：
+INSERT INTO tmp5 values( CURRENT_DATE() ),( NOW() );
+查看插入结果：
+SELECT * FROM tmp5;
+例5.13】创建数据表tmp6，定义数据类型为DATETIME的字段dt，向表中插入“YYYY-MM-DD HH:MM:SS”和“YYYYMMDDHHMMSS”字符串格式日期和时间值，SQL语句如下：
+首先创建表tmp6：
+CREATE TABLE tmp6(  dt DATETIME );
+向表中插入“YYYY-MM-DD HH:MM:SS”和“YYYYMMDDHHMMSS”格式日期：
+INSERT INTO tmp6 values('1998-08-08 08:08:08'),('19980808080808'),('20101010101010');
+查看插入结果：
+SELECT * FROM tmp6;
+【例5.14】向tmp6表中插入“YY-MM-DD HH:MM:SS”和“YYMMDDHHMMSS”字符串格式日期和时间值，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp6;
+向表中插入“YY-MM-DD HH:MM:SS”和“YYMMDDHHMMSS”格式日期：
+INSERT INTO tmp6 values('99-09-09 09:09:09'),('990909090909'),('101010101010');
+查看插入结果：
+SELECT * FROM tmp6;
+【例5.15】向tmp6表中插入YYYYMMDDHHMMSS 和YYMMDDHHMMSS数字格式日期和时间值，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp6;
+向表中插入YYYYMMDDHHMMSS和YYMMDDHHMMSS数字格式日期和时间：
+INSERT INTO tmp6 values(19990909090909), (101010101010);
+查看插入结果：
+SELECT * FROM tmp6;
+【例5.16】向tmp6表中插入系统当前日期和时间值，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp6;
+向表中插入系统当前日期：
+INSERT INTO tmp6 values( NOW() );
+查看插入结果：
+SELECT * FROM tmp6;
+【例 5.17】创建数据表tmp7，定义数据类型为TIMESTAMP的字段ts，向表中插入值’19950101010101’，’950505050505’，’1996-02-02 02:02:02’，’97@03@03 03@03@03’，121212121212，NOW()，SQL语句如下：
+CREATE TABLE tmp7( ts TIMESTAMP);
+向表中插入数据：
+INSERT INTO tmp7 values ('19950101010101'),
+('950505050505'),
+('1996-02-02 02:02:02'),
+('97@03@03 03@03@03'),
+(121212121212),
+( NOW() );
+查看插入结果：
+SELECT * FROM tmp7;
+【例5.18】向tmp7表中插入当前日期，查看插入值，更改时区为东10区，再次查看插入值，SQL语句如下：
+首先删除表中的数据：
+DELETE FROM tmp7;
+向表中插入系统当前日期：
+INSERT INTO tmp7 values( NOW() );
+查看当前时区下日期值：
+SELECT * FROM tmp7;
+set time_zone='+10:00';
+SELECT * FROM tmp7;
+【例5.19】下面将不同字符串保存到CHAR(4)和VARCHAR(4)列，说明CHAR和VARCHAR之间的差别，
+【例5.20】创建tmp8表，定义字段ch和vch数据类型依次为CHAR(4)、VARCHAR(4)向表中插入数据“ab  ”，SQL语句如下：
+创建表tmp8：
+CREATE TABLE tmp8(
+ch  CHAR(4),  vch  VARCHAR(4)
+);
+输入数据：
+INSERT INTO tmp8 VALUES('ab  ', 'ab  ');
+查询结果：
+SELECT concat('(', ch, ')'), concat('(',vch,')') FROM tmp8;
+例5.21】创建表tmp9，定义ENUM类型的列enm('first'，'second'，'third')，查看列成员的索引值，SQL语句如下：
+首先，创建tmp9表：
+CREATE TABLE tmp9( enm ENUM('first','second','third') );
+插入各个列值：
+INSERT INTO tmp9 values('first'),('second') ,('third') , (NULL);
+查看索引值：
+SELECT enm, enm+0 FROM tmp9;
+【例5.22】创建表tmp10，定义INT类型的soc字段，ENUM类型的字段level，列表值为('excellent','good', 'bad')，向表tmp10中插入数据(70,'good')、(90,1)、(75,2)、(50,3) 、(100,'best')，SQL语句如下：
+首先，创建数据表：
+CREATE TABLE tmp10 (soc INT, level enum('excellent', 'good','bad') );
+插入数据：
+INSERT INTO tmp10 values(70,'good'), (90,1),(75,2),(50,3);
+再次插入数据：
+INSERT INTO tmp10 values (100,'best'); 
+ERROR 1265 (01000): Data truncated for column 'level' at row 1
+这里系统提示错误信息，可以看到，由于字符串值“best”不在ENUM列表中，所以对数据进行了阻止插入操作，查询结果如下：
+SELECT * FROM tmp10;
+【例5.23】创建表tmp11，定义SET类型的字段s，取值列表为('a', 'b', 'c', 'd')，插入数据('a')，('a,b,a')，('c,a,d')，('a,x,b,y')，SQL语句如下：
+首先创建表tmp11：
+CREATE TABLE tmp11 ( s SET('a', 'b', 'c', 'd'));
+插入数据：
+INSERT INTO tmp11 values('a'),( 'a,b,a'),('c,a,d');
+再次插入数据：
+INSERT INTO tmp11 values ('a,x,b,y');
+ERROR 1265 (01000): Data truncated for column 's' at row 1
+由于插入了SET列不支持的值，因此MySQL给出错误提示。
+查看结果：
+SELECT * FROM tmp11;
+例5.24】创建表tmp12，定义BIT(4)类型的字段b，向表中插入数据2、9、15、16。
+首先创建表tmp12，SQL语句如下：
+CREATE TABLE tmp12( b BIT(4) );
+插入数据：
+INSERT INTO tmp12 VALUES(2), (9), (15);
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings:1
+查询插入结果：
+SELECT BIN(b+0) FROM tmp12;
+【例5.25】创建表tmp13，定义BINARY(3)类型的字段b和VARBINARY(3)类型的字段vb，并向表中插入数据’5’，比较两个字段的存储空间。
+首先创建表tmp13，输入SQL语句如下：
+CREATE TABLE tmp13(
+b binary(3),  vb varbinary(30)
+);
+插入数据：
+INSERT INTO tmp13 VALUES(5,5);
+查看两个字段存储数据的长度：
+SELECT length(b), length(vb) FROM tmp13;
+SELECT b,vb,b = '5', b='5\0\0',vb='5',vb = '5\0\0' FROM tmp13;
+例5.26】创建表tmp14，定义数据类型为INT的字段num，插入值64，对num值进行算术运算：
+首先创建表tmp14，输入语句如下：
+CREATE TABLE tmp14 ( num INT);
+向字段num插入数据64：
+INSERT INTO tmp14 value(64);
+接下来，对num值进行加法和减法运算：
+SELECT num, num+10, num-3+5, num+5-3, num+36.5 FROM tmp14;
+例5.27】对tmp14表中的num进行乘法、除法运算。
+SELECT num, num *2, num /2, num/3, num%3 FROM tmp14;
+【例5.28】用0除num。
+SELECT num, num / 0, num %0 FROM tmp14;
+例5.29】使用’=’进行相等判断，SQL语句如下：
+SELECT 1=0, '2'=2, 2=2,'0.02'=0, 'b'='b', (1+3) = (2+2),NULL=NULL;
+例5.30】使用’<=>’进行相等的判断，SQL语句如下：
+SELECT 1<=>0, '2'<=>2, 2<=>2,'0.02'<=>0, 'b'<=>'b', (1+3) <=> (2+1),NULL<=>NULL;
+例5.31】使用’<>’和’!=’进行不相等的判断，SQL语句如下：
+SELECT 'good'<>'god', 1<>2, 4!=4, 5.5!=5, (1+3)!=(2+1),NULL<>NULL;
+例5.32】使用’<=’进行比较判断，SQL语句如下：
+SELECT 'good'<='god', 1<=2, 4<=4, 5.5<=5, (1+3) <= (2+1),NULL<=NULL;
+例5.33】使用’<’进行比较判断，SQL语句如下：
+SELECT 'good'<'god', 1<2, 4<4, 5.5<5, (1+3) < (2+1),NULL<NULL;
+例5.34】使用’>=’进行比较判断，SQL语句如下：
+SELECT 'good'>='god', 1>=2, 4>=4, 5.5>=5, (1+3) >= (2+1),NULL>=NULL;
+【例5.35】使用’>’进行比较判断，SQL语句如下：
+SELECT 'good'>'god', 1>2, 4>4, 5.5>5, (1+3) > (2+1),NULL>NULL;
+【例5.36】使用IS NULL、ISNULL和IS NOT NULL判断NULL值和非NULL值，SQL语句如下：
+SELECT NULL IS NULL, ISNULL(NULL),ISNULL(10), 10 IS NOT NULL;
+例5.37】使用BETWEEN AND 进行值区间判断，输入SQL语句如下：
+SELECT 4 BETWEEN 4 AND 6, 4 BETWEEN 4 AND 6,12 BETWEEN 9 AND 10;
+SELECT  'x' BETWEEN 'f' AND 'g', 'b' BETWEEN 'a' AND 'c';
+【例5.38】使用LEAST运算符进行大小判断，SQL语句如下：
+SELECT least(2,0), least(20.0,3.0,100.5), least('a','c','b'),least(10,NULL);
+【例5.39】使用GREATEST运算符进行大小判断，SQL语句如下：
+SELECT greatest(2,0), greatest(20.0,3.0,100.5), greatest('a','c','b'),greatest(10,NULL);
+【例5.40】使用IN、NOT IN运算符进行判断，SQL语句如下：
+SELECT 2 IN (1,3,5,'thks'), 'thks' IN (1,3,5,'thks');
+【例5.41】存在NULL值时的IN查询，SQL语句如下：
+SELECT NULL IN (1,3,5,'thks'),10 IN (1,3,NULL,'thks');
+【例5.42】使用运算符LIKE进行字符串匹配运算，SQL语句如下：
+SELECT 'stud' LIKE 'stud', 'stud' LIKE 'stu_','stud' LIKE '%d','stud' LIKE 't_ _ _', 's' LIKE NULL;
+
+【例5.43】使用运算符REGEXP进行字符串匹配运算，SQL语句如下：
+SELECT 'ssky' REGEXP '^s', 'ssky' REGEXP 'y$', 'ssky' REGEXP '.sky', 'ssky' REGEXP '[ab]';
+
+【例5.44】分别使用非运算符“NOT”和“！”进行逻辑判断，SQL语句如下：
+ SELECT NOT 10, NOT (1-1), NOT -5, NOT NULL, NOT 1 + 1;
+
+ SELECT !10, !(1-1), !-5, ! NULL, ! 1 + 1;
+【例5.45】分别使用与运算符“AND”和“&&”进行逻辑判断，SQL语句如下：
+ SELECT  1 AND -1,1 AND 0,1 AND NULL, 0 AND NULL;
+
+ SELECT  1 && -1,1 && 0,1 && NULL, 0 && NULL;
+
+【例5.46】分别使用或运算符“OR”和“||”进行逻辑判断，SQL语句如下：
+ SELECT  1 OR -1 OR 0, 1 OR 2,1 OR NULL, 0 OR NULL, NULL OR NULL;
+ SELECT  1 || -1 || 0, 1 || 2,1 || NULL, 0 || NULL, NULL || NULL;
+【例5.47】使用异或运算符“XOR”进行逻辑判断，SQL语句如下：
+SELECT 1 XOR 1, 0 XOR 0, 1 XOR 0, 1 XOR NULL, 1 XOR 1 XOR 1;
+执行上面的语句，结果如下。
+ SELECT 1 XOR 1, 0 XOR 0, 1 XOR 0, 1 XOR NULL, 1 XOR 1 XOR 1;
+
+【例5.48】使用位或运算符进行运算，SQL语句如下：
+ SELECT 10 | 15, 9 | 4 | 2;
+
+【例5.49】使用位与运算符进行运算，SQL语句如下：
+ SELECT 10 & 15, 9 &4& 2;
+【例5.50】使用位异或运算符进行运算，SQL语句如下：
+ SELECT 10 ^ 15, 1 ^0, 1 ^ 1;
+【例5.51】使用位左移运算符进行运算，SQL语句如下：
+ SELECT 1<<2, 4<<2;
+【例5.52】使用位右移运算符进行运算，SQL语句如下：
+ SELECT 1>>1, 16>>2;
+【例5.53】使用位取反运算符进行运算，SQL语句如下：
+ SELECT 5 & ~1;
+
+

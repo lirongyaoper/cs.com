@@ -1,0 +1,15 @@
+1. 案例目的
+本案例使用数据表tmp15，首先创建该表，SQL语句如下：
+CREATE TABLE tmp15 (note VARCHAR(100), price INT);
+
+INSERT INTO tmp15 VALUES(“Thisisgood”, 50);
+2. 案例操作过程
+  对表tmp15中的整型数值字段price进行算术运算，执行过程如下：
+ SELECT price, price + 10, price -10, price * 2, price /2, price%3 FROM tmp15 ;
+ SELECT price, price> 10, price<10, price != 10, price =10, price <=>10,price <>10 FROM tmp15 ;
+mysql> SELECT price, price BETWEEN 30 AND 80, GREATEST(price, 70,30), price IN (10, 20, 50,35) FROM tmp15 ;
+mysql> SELECT note, note IS NULL, note LIKE 't%', note REGEXP '$y' ,note REGEXP '[gm]' FROM tmp15 ;
+mysql> SELECT price, price && 1, price && NULL, price||0, price AND 0, 0 AND NULL, price OR NULL FROM tmp15 ;
+mysql>  SELECT price,!price,NOT NULL,price XOR 3, 0 XOR NULL, price XOR 0 FROM tmp15 ;
+mysql> SELECT price, price&2 , price|4, ~price FROM tmp15 ;
+mysql> SELECT price, price<<2, price>>2  FROM tmp15 ;

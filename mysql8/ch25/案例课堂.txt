@@ -1,0 +1,87 @@
+本系统所有的表都放在bbs数据库下。创建和选择bbs数据库的SQL代码如下：
+CREATE DATABASE bbs;
+
+USE bbs;
+CREATE TABLE user(
+uID INT PRIMARY KEY UNIQUE NOT NULL,
+userName VARCHAR(20) NOT NULL,
+userPassword VARCHAR(20) NOT NULL,
+userEmail VARCHAR(20) NOT NULL,
+userBirthday DATE NOT NULL,
+userSex BIT NOT NULL,
+userClass  INT NOT NULL,
+userStatement VARCHAR(150) NOT NULL,
+userRegDate  TIMESTAMP NOT NULL,
+userPoint  INT NOT NULL
+);
+CREATE TABLE admin(
+adminID INT PRIMARY KEY UNIQUE NOT NULL,
+adminName VARCHAR(20) NOT NULL,
+adminPassword VARCHAR(20) NOT NULL
+);
+CREATE TABLE section (
+sID INT PRIMARY KEY UNIQUE NOT NULL,
+sName VARCHAR(20) NOT NULL,
+sMasterID INT NOT NULL,
+sStatement VARCHAR NOT NULL,
+sClickCount INT NOT NULL,
+sTopicCount INT NOT NULL
+);
+CREATE TABLE topic (
+tID INT PRIMARY KEY UNIQUE NOT NULL,
+tSID INT NOT NULL,
+tuid INT NOT NULL,
+tReplyCount INT NOT NULL,
+tEmotion VARCHAR NOT NULL,
+tTopic  VARCHAR NOT NULL,
+tContents TEXT NOT NULL,
+tTime 	TIMESTAMP NOT NULL,
+tClickCount  INT NOT NULL,
+tLastClickT TIMESTAMP NOT NULL
+);
+CREATE TABLE reply (
+rID INT PRIMARY KEY UNIQUE NOT NULL,
+tID INT NOT NULL,
+uID INT NOT NULL,
+rEmotion CHAR NOT NULL,
+rTopic VARCHAR（20） NOT NULL,
+rContents TEXT NOT NULL,
+rTime TIMESTAMP NOT NULL,
+rClickCount	 INT NOT NULL
+);
+CREATE INDEX index_topic_title ON topic(tTopic);
+CREATE INDEX index_topic_date  ON topic(tTime);
+ALTER TABLE topic  ADD INDEX index_new_contents (contents);
+CREATE INDEX index_section_name ON section (sName);
+CREATE INDEX index_reply_rtime  ON comment (rTime);
+CREATE INDEX index_reply _rtopic  ON comment (rTopic);
+CREATE INDEX index_reply _rid  ON comment (tID);
+CREATE VIEW topic_view
+AS SELECT s.ID,s.Name,t.tTopic,t.tContents,t.tTime
+FROM section s,topic t
+WHERE section.sID=topic.sID;
+DELIMITER &&
+CREATE TRIGGER section_count AFTER UPDATE
+ON section FOR EACH ROW
+BEGIN
+   UPDATE section SET sTopicCount= sTopicCount+1
+   WHERE sID=NEW.sID;
+END
+&&
+DELIMITER ;
+DELIMITER &&
+CREATE TRIGGER update_userID AFTER UPDATE
+ON user FOR EACH ROW
+BEGIN
+   UPDATE reply SET uID=NEW.uID
+END
+&&
+DELIMITER ;
+DELIMITER &&
+CREATE TRIGGER delete_user AFTER DELETE
+ON user FOR EACH ROW
+BEGIN
+   DELETE FROM top WHERE uID=OLD.uID
+END
+&&
+DELIMITER ;

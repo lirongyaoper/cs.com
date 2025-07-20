@@ -1,0 +1,91 @@
+本章将使用样例表person，创建语句如下：
+CREATE TABLE person
+(
+id     INT UNSIGNED NOT NULL AUTO_INCREMENT,
+name   CHAR(40) NOT NULL DEFAULT '',
+age    INT NOT NULL DEFAULT 0,
+info   CHAR(50) NULL,
+PRIMARY KEY (id)
+);
+【例8.1】在person表中，插入一条新记录，id值为1，name值为Green，age值为21，info值为Lawyer，SQL语句如下：
+执行插入操作之前，使用SELECT语句查看表中的数据：
+ SELECT * FROM person;
+Empty set (0.00 sec)
+
+ INSERT INTO person (id ,name, age , info)
+      VALUES (1,'Green', 21, 'Lawyer');
+
+ SELECT * FROM person;
+
+【例8.2】在person表中，插入一条新记录，id值为2，name值为Suse，age值为22，info值为dancer，SQL语句如下：
+ INSERT INTO person (age ,name, id , info)
+      VALUES (22, 'Suse', 2, 'dancer');
+【例8.3】在person表中，插入一条新记录，id值为3，name值为Mary，age值为24，info值为Musician，SQL语句如下：
+ INSERT INTO person 
+     VALUES (3,'Mary', 24, 'Musician');
+
+ SELECT * FROM person;
+
+【例8.4】在person表中，插入一条新记录，name值为Willam，age值为20，info值为sports man，SQL语句如下：
+ INSERT INTO person (name, age,info)
+     VALUES('Willam', 20, 'sports man');
+ SELECT * FROM person;
+【例8.5】在person表中，插入一条新记录，name值为laura，age值为25，SQL语句如下：
+ INSERT INTO person (name, age ) VALUES ('Laura', 25);
+
+ SELECT * FROM person;
+【例8.6】在person表中，在name、age和info字段指定插入值，同时插入3条新记录，SQL语句如下：
+INSERT INTO person(name, age, info)
+VALUES ('Evans',27, 'secretary'),
+('Dale',22, 'cook'),
+('Edison',28, 'singer');
+  SELECT * FROM person;
+【例8.7】在person表中，不指定插入列表，同时插入2条新记录，SQL语句如下：
+INSERT INTO person 
+VALUES (9,'Harry',21, 'magician'), 
+(NULL,'Harriet',19, 'pianist');
+SELECT * FROM person;
+【例8.8】从person_old表中查询所有的记录，并将其插入到person表中。
+CREATE TABLE person_old
+(
+id     INT UNSIGNED NOT NULL AUTO_INCREMENT,
+name   CHAR(40) NOT NULL DEFAULT '',
+age    INT NOT NULL DEFAULT 0,
+info   CHAR(50) NULL,
+PRIMARY KEY (id)
+);
+向person_old表中添加两条记录：
+ INSERT INTO person_old
+     VALUES (11,'Harry',20, 'student'), (12,'Beckham',31, 'police');
+
+ SELECT * FROM person_old;
+
+INSERT INTO person(id, name, age, info)
+SELECT id, name, age, info FROM person_old;
+SELECT * FROM person;
+
+【例8.9】在person表中，更新id值为11的记录，将age字段值改为15，将name字段值改为LiMing，SQL语句如下：
+UPDATE person SET age = 15, name='LiMing' WHERE id = 11;
+更新操作执行前可以使用SELECT语句查看当前的数据：
+ SELECT * FROM person WHERE id=11;
+ UPDATE person SET age = 15, name='LiMing' WHERE id = 11;
+ SELECT * FROM person WHERE id=11;
+【例8.10】在person表中，更新age值为19~22的记录，将info字段值都改为student，SQL语句如下：
+UPDATE person SET info='student'  WHERE id  BETWEEN 19 AND 22;
+SELECT * FROM person WHERE age BETWEEN 19 AND 22;
+UPDATE person SET info='student' WHERE age BETWEEN 19 AND 22;
+SELECT * FROM person WHERE age BETWEEN 19 AND 22;
+【例8.11】在person表中，删除id等于11的记录，SQL语句如下：
+SELECT * FROM person WHERE id=11;
+DELETE FROM person WHERE id = 11;
+SELECT * FROM person WHERE id=11;
+【例8.12】在person表中，使用DELETE语句同时删除多条记录，在前面UPDATE语句中将age字段值在19~22之间的记录的info字段值修改为student，在这里删除这些记录，SQL语句如下：
+ SELECT * FROM person WHERE age BETWEEN 19 AND 22;
+ DELETE FROM person WHERE age BETWEEN 19 AND 22;
+ SELECT * FROM person WHERE age BETWEEN 19 AND 22;
+【例8.13】删除person表中所有记录，SQL语句如下：
+DELETE FROM person;
+SELECT * FROM person;
+DELETE FROM person;
+SELECT * FROM person;
+
