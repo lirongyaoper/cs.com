@@ -1,0 +1,8 @@
+-> 通用格式(VLESS+reality+XHTTP) 
+    vless://c8f08463-619b-4009-8a5f-8e6149ef58bb@www.lrycms.com:10080?encryption=none&security=reality&type=xhttp&sni=www.lrycms.com&host=www.lrycms.com&fp=chrome&path=aliyunxHTTP&pbk=OwSeTQlIKYO29FqWuP2blKsDn1bhd5rZmde8YaoFmE8&sid=6ba85179e30d4fc2#lrycms-VLESS_XHTTP
+ 
+ ---> 格式化明文(VLESS+reality+XHTTP) 
+协议类型:VLESS reality，地址:www.lrycms.com，publicKey:OwSeTQlIKYO29FqWuP2blKsDn1bhd5rZmde8YaoFmE8，shortId: 6ba85179e30d4fc2,serverNames：www.lrycms.com，端口:10080，路径：aliyunxHTTP，SNI:www.lrycms.com，伪装域名:www.lrycms.com，用户ID:c8f08463-619b-4009-8a5f-8e6149ef58bb，传输方式:xhttp，账户名:lrycms-VLESS_XHTTP
+ 
+ ---> 二维码 VLESS(VLESS+reality+XHTTP) 
+    https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=vless%3A%2F%2Fc8f08463-619b-4009-8a5f-8e6149ef58bb%40www.lrycms.com%3A10080%3Fencryption%3Dnone%26security%3Dreality%26type%3Dtcp%26sni%3Dwww.lrycms.com%26fp%3Dchrome%26path%3DaliyunxHTTP%26host%3Dwww.lrycms.com%26pbk%3DOwSeTQlIKYO29FqWuP2blKsDn1bhd5rZmde8YaoFmE8%26sid%3D6ba85179e30d4fc2%23lrycms-VLESS_XHTTP
