@@ -168,8 +168,9 @@ function generateHTMLMenu($tree, $parent_id = 0) {
 }
 
 echo "你的答案：\n";
-echo generateHTMLMenu($tree);
-echo "\n";
+// TODO: 完成generateHTMLMenu函数后取消注释下面这行
+// echo generateHTMLMenu($tree);
+echo "<!-- 请先完成generateHTMLMenu函数的实现 -->\n";
 
 echo "4.2 生成面包屑导航\n";
 echo "提示：从指定节点向上追溯到根节点\n";
@@ -184,8 +185,9 @@ function generateBreadcrumbNav($tree, $node_id) {
 }
 
 echo "你的答案（为iPhone系列生成面包屑）：\n";
-echo generateBreadcrumbNav($tree, 9); // iPhone系列的ID是9
-echo "\n";
+// TODO: 完成generateBreadcrumbNav函数后取消注释下面这行
+// echo generateBreadcrumbNav($tree, 9); // iPhone系列的ID是9
+echo "<!-- 请先完成generateBreadcrumbNav函数的实现 -->\n";
 
 echo "4.3 查找某个菜单的所有兄弟菜单\n";
 echo "提示：先找到父节点，再获取父节点的所有子节点，排除自己\n";
@@ -199,9 +201,10 @@ function findSiblings($tree, $node_id) {
 }
 
 echo "你的答案（查找'手机产品'的兄弟菜单）：\n";
-$siblings = findSiblings($tree, 5); // 手机产品的ID是5
+// TODO: 完成findSiblings函数后取消注释下面的代码
+// $siblings = findSiblings($tree, 5); // 手机产品的ID是5
 // TODO: 显示兄弟菜单
-echo "\n";
+echo "<!-- 请先完成findSiblings函数的实现 -->\n";
 
 // =============================================
 // 练习5：高级应用 (难度: ⭐⭐⭐⭐)
@@ -223,12 +226,13 @@ function moveMenu($tree_data, $menu_id, $new_parent_id) {
 }
 
 echo "你的答案（将'iPhone系列'移动到'电脑产品'下）：\n";
-$modified_data = moveMenu($menu_data, 9, 6);
-$new_tree = new SimpleTree();
-$new_tree->init($modified_data);
-echo "移动后的结构：\n";
-echo $new_tree->generateTreeText();
-echo "\n";
+// TODO: 完成moveMenu函数后取消注释下面的代码
+// $modified_data = moveMenu($menu_data, 9, 6);
+// $new_tree = new SimpleTree();
+// $new_tree->init($modified_data);
+// echo "移动后的结构：\n";
+// echo $new_tree->generateTreeText();
+echo "<!-- 请先完成moveMenu函数的实现 -->\n";
 
 echo "5.2 删除菜单及其所有子菜单\n";
 echo "提示：先获取所有子孙节点，然后一起删除\n";
@@ -242,12 +246,13 @@ function deleteMenuAndChildren($tree_data, $menu_id) {
 }
 
 echo "你的答案（删除'新闻中心'及其所有子菜单）：\n";
-$deleted_data = deleteMenuAndChildren($menu_data, 3);
-$deleted_tree = new SimpleTree();
-$deleted_tree->init($deleted_data);
-echo "删除后的结构：\n";
-echo $deleted_tree->generateTreeText();
-echo "\n";
+// TODO: 完成deleteMenuAndChildren函数后取消注释下面的代码
+// $deleted_data = deleteMenuAndChildren($menu_data, 3);
+// $deleted_tree = new SimpleTree();
+// $deleted_tree->init($deleted_data);
+// echo "删除后的结构：\n";
+// echo $deleted_tree->generateTreeText();
+echo "<!-- 请先完成deleteMenuAndChildren函数的实现 -->\n";
 
 // =============================================
 // 自我检测

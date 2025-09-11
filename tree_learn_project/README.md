@@ -37,22 +37,54 @@ tree_learning_project/
     └── style.css           # 样式文件
 ```
 
+## 🎨 可视化演示
+
+为了更好地理解Tree类的工作原理，我们提供了交互式的可视化演示：
+
+### 🌐 在线演示
+- **文件位置**: `assets/tree_demo.html`
+- **样式文件**: `assets/style.css`
+- **启动脚本**: `run_demo.php`
+
+### 🚀 快速启动
+```bash
+# 方式一：运行启动脚本
+php run_demo.php
+
+# 方式二：直接打开HTML文件
+# 双击 assets/tree_demo.html 或在浏览器中打开
+
+# 方式三：启动本地服务器
+php -S localhost:8080
+# 然后访问: http://localhost:8080/assets/tree_demo.html
+```
+
+### ✨ 演示功能
+- 📊 **5种演示数据集**: 公司架构、电商分类、教育课程、网站菜单、文件系统
+- 🎯 **交互操作**: 点击展开/折叠、节点选择、信息查看
+- 🔧 **实时演示**: 路径查找、兄弟节点、子孙节点、深度计算
+- 💻 **代码示例**: 动态生成对应的PHP代码
+- 📱 **响应式设计**: 支持桌面端和移动端
+
 ## 🚀 学习路径
 
 ### 第一阶段：理解基础概念
-1. 阅读 `docs/01_基础概念.md` - 了解什么是树形结构
-2. 阅读 `docs/02_数据结构.md` - 理解数据的组织方式
-3. 运行 `examples/basic_usage.php` - 看看树形结构的基本操作
+1. **可视化入门** - 打开 `assets/tree_demo.html` 直观了解树形结构
+2. 阅读 `docs/01_基础概念.md` - 了解什么是树形结构
+3. 阅读 `docs/02_数据结构.md` - 理解数据的组织方式
+4. 运行 `examples/basic_usage.php` - 看看树形结构的基本操作
 
 ### 第二阶段：掌握核心功能
 1. 阅读 `docs/03_核心方法.md` - 学习Tree类的主要方法
 2. 研究 `src/BasicTree.php` - 理解代码实现
-3. 完成 `exercises/exercise_01.php` - 动手练习
+3. **可视化验证** - 在演示中尝试不同的树操作
+4. 完成 `exercises/exercise_01.php` - 动手练习
 
 ### 第三阶段：实战应用
 1. 阅读 `docs/04_实战应用.md` - 了解实际应用场景
 2. 运行 `examples/menu_demo.php` 和 `examples/category_demo.php`
-3. 完成 `exercises/exercise_02.php` - 综合练习
+3. **对比学习** - 将示例效果与可视化演示对比
+4. 完成 `exercises/exercise_02.php` - 综合练习
 
 ## 💡 学习建议
 
