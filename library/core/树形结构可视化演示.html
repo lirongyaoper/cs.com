@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleTree generateTreeText 可视化演示</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1, h2, h3 {
+            color: #333;
+        }
+        
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .tree-display {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #007acc;
+            background: #f0f8ff;
+        }
+        
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .prefix-demo {
+            display: inline-block;
+            background: #e3f2fd;
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 4px;
+            border: 1px solid #2196f3;
+        }
+        
+        .current-prefix {
+            background: #ffcdd2;
+            border-color: #f44336;
+        }
+        
+        .next-prefix {
+            background: #c8e6c9;
+            border-color: #4caf50;
+        }
+        
+        .animation-container {
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .node {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 2px;
+            background: #e1f5fe;
+            border: 2px solid #0277bd;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .node.processing {
+            background: #fff3e0;
+            border-color: #f57c00;
+            animation: pulse 1s infinite;
+        }
+        
+        .node.completed {
+            background: #e8f5e8;
+            border-color: #388e3c;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .variable {
+            color: #66d9ef;
+        }
+        
+        .string {
+            color: #a6e22e;
+        }
+        
+        .comment {
+            color: #75715e;
+            font-style: italic;
+        }
+        
+        .control-panel {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            background: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            background: #005a9e;
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌳 SimpleTree generateTreeText 可视化演示</h1>
+        
+        <div class="demo-section">
+            <h2>📊 示例数据结构</h2>
+            <div class="code-block">
+<span class="variable">$data</span> = <span class="string">array</span>(
+    <span class="string">1</span> => <span class="string">array</span>(<span class="string">'id'</span> => <span class="string">1</span>, <span class="string">'parentid'</span> => <span class="string">0</span>, <span class="string">'name'</span> => <span class="string">'电子产品'</span>),
+    <span class="string">2</span> => <span class="string">array</span>(<span class="string">'id'</span> => <span class="string">2</span>, <span class="string">'parentid'</span> => <span class="string">1</span>, <span class="string">'name'</span> => <span class="string">'手机'</span>),
+    <span class="string">3</span> => <span class="string">array</span>(<span class="string">'id'</span> => <span class="string">3</span>, <span class="string">'parentid'</span> => <span class="string">1</span>, <span class="string">'name'</span> => <span class="string">'电脑'</span>),
+    <span class="string">4</span> => <span class="string">array</span>(<span class="string">'id'</span> => <span class="string">4</span>, <span class="string">'parentid'</span> => <span class="string">2</span>, <span class="string">'name'</span> => <span class="string">'iPhone'</span>),
+    <span class="string">5</span> => <span class="string">array</span>(<span class="string">'id'</span> => <span class="string">5</span>, <span class="string">'parentid'</span> => <span class="string">2</span>, <span class="string">'name'</span> => <span class="string">'华为手机'</span>),
+    <span class="string">6</span> => <span class="string">array</span>(<span class="string">'id'</span> => <span class="string">6</span>, <span class="string">'parentid'</span> => <span class="string">3</span>, <span class="string">'name'</span> => <span class="string">'笔记本电脑'</span>),
+    <span class="string">7</span> => <span class="string">array</span>(<span class="string">'id'</span> => <span class="string">7</span>, <span class="string">'parentid'</span> => <span class="string">3</span>, <span class="string">'name'</span> => <span class="string">'台式电脑'</span>)
+);
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎯 最终生成的树形结构</h2>
+            <div class="tree-display" id="finalResult">
+电子产品
+├── 手机
+│   ├── iPhone
+│   └── 华为手机
+└── 电脑
+    ├── 笔记本电脑
+    └── 台式电脑
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🔍 前缀字符详解</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>字符</th>
+                        <th>名称</th>
+                        <th>作用</th>
+                        <th>使用场景</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>├──</code></td>
+                        <td>分支连接符</td>
+                        <td>表示这个节点后面还有兄弟节点</td>
+                        <td>非最后一个子节点</td>
+                    </tr>
+                    <tr>
+                        <td><code>└──</code></td>
+                        <td>末端连接符</td>
+                        <td>表示这是最后一个兄弟节点</td>
+                        <td>最后一个子节点</td>
+                    </tr>
+                    <tr>
+                        <td><code>│</code></td>
+                        <td>垂直连接线</td>
+                        <td>表示上层还有节点，需要保持连接</td>
+                        <td>传递给子节点的前缀</td>
+                    </tr>
+                    <tr>
+                        <td><code>&nbsp;&nbsp;&nbsp;&nbsp;</code></td>
+                        <td>空格填充</td>
+                        <td>对齐和填充，不显示连接线</td>
+                        <td>最后节点的子节点前缀</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="demo-section">
+            <h2>⚡ 动态演示过程</h2>
+            <div class="control-panel">
+                <button class="btn" id="startAnimation">开始演示</button>
+                <button class="btn" id="pauseAnimation">暂停</button>
+                <button class="btn" id="resetAnimation">重置</button>
+                <button class="btn" id="nextStep">下一步</button>
+            </div>
+            
+            <div id="animationDisplay">
+                <div class="step" id="step0" style="display: none;">
+                    <h3>🚀 步骤 1: 开始处理根节点的子节点</h3>
+                    <p>调用: <code>generateTreeText(0, "")</code></p>
+                    <p>找到子节点: 电子产品 (ID: 1)</p>
+                    <div class="tree-display">电子产品</div>
+                </div>
+
+                <div class="step" id="step1" style="display: none;">
+                    <h3>📱 步骤 2: 处理"手机"节点</h3>
+                    <p>当前处理: <span class="highlight">手机</span> (非最后节点)</p>
+                    <p><span class="prefix-demo current-prefix">$current_prefix = "├── "</span></p>
+                    <p><span class="prefix-demo next-prefix">$next_prefix = "│   "</span></p>
+                    <div class="tree-display">
+电子产品
+├── 手机
+                    </div>
+                </div>
+
+                <div class="step" id="step2" style="display: none;">
+                    <h3>📞 步骤 3: 递归处理手机的子节点</h3>
+                    <p>调用: <code>generateTreeText(2, "│   ")</code></p>
+                    <p>处理: <span class="highlight">iPhone</span> (非最后节点)</p>
+                    <p><span class="prefix-demo current-prefix">$current_prefix = "│   ├── "</span></p>
+                    <div class="tree-display">
+电子产品
+├── 手机
+│   ├── iPhone
+                    </div>
+                </div>
+
+                <div class="step" id="step3" style="display: none;">
+                    <h3>📱 步骤 4: 处理"华为手机"节点</h3>
+                    <p>处理: <span class="highlight">华为手机</span> (最后节点)</p>
+                    <p><span class="prefix-demo current-prefix">$current_prefix = "│   └── "</span></p>
+                    <div class="tree-display">
+电子产品
+├── 手机
+│   ├── iPhone
+│   └── 华为手机
+                    </div>
+                </div>
+
+                <div class="step" id="step4" style="display: none;">
+                    <h3>💻 步骤 5: 处理"电脑"节点</h3>
+                    <p>当前处理: <span class="highlight">电脑</span> (最后节点)</p>
+                    <p><span class="prefix-demo current-prefix">$current_prefix = "└── "</span></p>
+                    <p><span class="prefix-demo next-prefix">$next_prefix = "    " (注意：4个空格，没有│)</span></p>
+                    <div class="tree-display">
+电子产品
+├── 手机
+│   ├── iPhone
+│   └── 华为手机
+└── 电脑
+                    </div>
+                </div>
+
+                <div class="step" id="step5" style="display: none;">
+                    <h3>💻 步骤 6: 递归处理电脑的子节点</h3>
+                    <p>调用: <code>generateTreeText(3, "    ")</code></p>
+                    <p>处理: <span class="highlight">笔记本电脑</span> (非最后节点)</p>
+                    <p><span class="prefix-demo current-prefix">$current_prefix = "    ├── "</span></p>
+                    <div class="tree-display">
+电子产品
+├── 手机
+│   ├── iPhone
+│   └── 华为手机
+└── 电脑
+    ├── 笔记本电脑
+                    </div>
+                </div>
+
+                <div class="step" id="step6" style="display: none;">
+                    <h3>🖥️ 步骤 7: 处理"台式电脑"节点</h3>
+                    <p>处理: <span class="highlight">台式电脑</span> (最后节点)</p>
+                    <p><span class="prefix-demo current-prefix">$current_prefix = "    └── "</span></p>
+                    <div class="tree-display">
+电子产品
+├── 手机
+│   ├── iPhone
+│   └── 华为手机
+└── 电脑
+    ├── 笔记本电脑
+    └── 台式电脑
+                    </div>
+                    <p><strong>✅ 完成！整个树形结构生成完毕。</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🔑 关键理解点</h2>
+            <div class="step">
+                <h3>1. $next_prefix 的作用机制</h3>
+                <p><strong>非最后节点</strong>：传递 <code>"│   "</code> 给子节点</p>
+                <ul>
+                    <li>包含垂直线 <code>│</code>，表示"上层还有兄弟节点"</li>
+                    <li>子节点需要显示垂直连接线保持结构完整</li>
+                </ul>
+                <p><strong>最后节点</strong>：传递 <code>"    "</code> 给子节点</p>
+                <ul>
+                    <li>只有空格，没有垂直线</li>
+                    <li>子节点不需要垂直连接线，视觉上更清晰</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3>2. 递归的优雅之处</h3>
+                <p>每个节点只需要知道：</p>
+                <ul>
+                    <li>自己是否是最后一个兄弟节点</li>
+                    <li>父节点传递的前缀信息</li>
+                    <li>如何为自己的子节点构造前缀</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3>3. 前缀的传递链</h3>
+                <p>父节点的位置信息通过 <code>$next_prefix</code> 传递给子节点，形成一条信息传递链，确保整个树结构的视觉连贯性。</p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎨 不同场景对比</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <h4>手机子节点 (父节点非最后)</h4>
+                    <div class="tree-display">
+├── 手机
+│   ├── iPhone
+│   └── 华为手机
+                    </div>
+                    <p>注意左侧的 <code>│</code> 连接线</p>
+                </div>
+                <div>
+                    <h4>电脑子节点 (父节点是最后)</h4>
+                    <div class="tree-display">
+└── 电脑
+    ├── 笔记本电脑
+    └── 台式电脑
+                    </div>
+                    <p>注意左侧是空格，没有 <code>│</code></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const totalSteps = 7;
+        let isAnimating = false;
+        let animationInterval;
+
+        const startBtn = document.getElementById('startAnimation');
+        const pauseBtn = document.getElementById('pauseAnimation');
+        const resetBtn = document.getElementById('resetAnimation');
+        const nextBtn = document.getElementById('nextStep');
+
+        function showStep(stepIndex) {
+            // 隐藏所有步骤
+            for (let i = 0; i < totalSteps; i++) {
+                const step = document.getElementById(`step${i}`);
+                if (step) {
+                    step.style.display = 'none';
+                }
+            }
+            
+            // 显示当前步骤
+            if (stepIndex < totalSteps) {
+                const currentStepElement = document.getElementById(`step${stepIndex}`);
+                if (currentStepElement) {
+                    currentStepElement.style.display = 'block';
+                    currentStepElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                showStep(currentStep);
+                currentStep++;
+            }
+            
+            if (currentStep >= totalSteps) {
+                pauseAnimation();
+                startBtn.textContent = '重新开始';
+            }
+        }
+
+        function startAnimation() {
+            if (currentStep >= totalSteps) {
+                resetAnimation();
+            }
+            
+            isAnimating = true;
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            nextBtn.disabled = true;
+            
+            animationInterval = setInterval(() => {
+                nextStep();
+                if (currentStep >= totalSteps) {
+                    pauseAnimation();
+                }
+            }, 3000);
+        }
+
+        function pauseAnimation() {
+            isAnimating = false;
+            clearInterval(animationInterval);
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            nextBtn.disabled = false;
+            
+            if (currentStep >= totalSteps) {
+                startBtn.textContent = '重新开始';
+            } else {
+                startBtn.textContent = '继续演示';
+            }
+        }
+
+        function resetAnimation() {
+            pauseAnimation();
+            currentStep = 0;
+            startBtn.textContent = '开始演示';
+            
+            // 隐藏所有步骤
+            for (let i = 0; i < totalSteps; i++) {
+                const step = document.getElementById(`step${i}`);
+                if (step) {
+                    step.style.display = 'none';
+                }
+            }
+        }
+
+        // 事件监听器
+        startBtn.addEventListener('click', startAnimation);
+        pauseBtn.addEventListener('click', pauseAnimation);
+        resetBtn.addEventListener('click', resetAnimation);
+        nextBtn.addEventListener('click', nextStep);
+
+        // 初始化
+        resetAnimation();
+    </script>
+</body>
+</html>

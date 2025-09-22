@@ -132,36 +132,27 @@ class SimpleTree {
      * @param string $prefix 前缀字符串（用于递归时的缩进）
      * @return string 树形文本字符串
      */
-    public function generateTreeText($parent_id = 0, $prefix = '') {
+    public function generateTreeText($parent_id = 0, $prefix=''){
         $result = '';
         $children = $this->getChildren($parent_id);
-        
-        if ($children) {
+        if($children){
             $count = count($children);
             $index = 0;
-            
-            foreach ($children as $child_id => $child) {
+            foreach($children as $child_id => $child){
                 $index++;
                 $is_last = ($index == $count);
-                
-                // 根据是否是最后一个子节点来确定前缀字符
-                if ($is_last) {
-                    $current_prefix = $prefix . '└── ';
-                    $next_prefix = $prefix . '    ';
-                } else {
-                    $current_prefix = $prefix . '├── ';
-                    $next_prefix = $prefix . '│   ';
+                if($is_last){
+                    $result .= $prefix.'└─ '.$child['name']."\n";
+                    $new_prefix = $prefix.'   ';
+                }else{
+                    $result .= $prefix.'├─ '.$child['name']."\n";
+                    $new_prefix = $prefix.'│  ';
                 }
-                
-                // 添加当前节点
-                $result .= $current_prefix . $child['name'] . "\n";
-                
-                // 递归处理子节点
-                $result .= $this->generateTreeText($child_id, $next_prefix);
+                $result .= $this->generateTreeText($child_id, $new_prefix);
             }
         }
-        
         return $result;
+
     }
     
     /**
@@ -190,25 +181,22 @@ class SimpleTree {
      * @param int $node_id 节点ID
      * @return int 返回节点深度，根节点深度为1
      */
-    public function getDepth($node_id) {
-        if (!isset($this->data[$node_id])) {
-            return 0;
+    public function getDepth($node_id){
+        if(!isset($this->data[$node_id])){
+            return false; //节点不存在
         }
-        
         $depth = 1;
         $current_id = $node_id;
-        
-        // 向上遍历到根节点
-        while ($this->data[$current_id]['parentid'] != 0) {
+        while($this->data[$current_id]['parentid'] != 0){
             $parent_id = $this->data[$current_id]['parentid'];
-            if (!isset($this->data[$parent_id])) {
-                break; // 防止无限循环
+            if(!isset($this->data[$parent_id])){
+                break;
             }
             $depth++;
             $current_id = $parent_id;
         }
-        
         return $depth;
+
     }
     
     /**
@@ -241,7 +229,11 @@ if (basename(__FILE__) == basename($_SERVER["SCRIPT_NAME"])) {
         4 => array('id' => 4, 'parentid' => 2, 'name' => 'iPhone'),
         5 => array('id' => 5, 'parentid' => 2, 'name' => '华为手机'),
         6 => array('id' => 6, 'parentid' => 3, 'name' => '笔记本电脑'),
-        7 => array('id' => 7, 'parentid' => 3, 'name' => '台式电脑')
+        7 => array('id' => 7, 'parentid' => 3, 'name' => '台式电脑'),
+        8 => array('id' => 8, 'parentid' => 4, 'name' => 'iPhone 12'),
+        9 => array('id' => 9, 'parentid' => 4, 'name' => 'iPhone 13'),
+        10 => array('id' => 10 , 'parentid' => 5, 'name' => 'Mate 40'),
+        11 => array('id' => 11 , 'parentid' => 5, 'name' => 'P50')
     );
     
     // 2. 创建Tree实例并初始化
