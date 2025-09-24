@@ -54,14 +54,14 @@ class SimpleTree {
      */
     public function getChildren($parent_id) {
         $children = array();
-        
+
         // 遍历所有数据，找出parentid等于指定ID的记录
         foreach ($this->data as $id => $item) {
-            if ($item['parentid'] == $parent_id) {
+            if($item['parentid']== $parent_id) {
                 $children[$id] = $item;
-            }
+            }            
         }
-        
+
         // 如果找到了子节点就返回，否则返回false
         return empty($children) ? false : $children;
     }
